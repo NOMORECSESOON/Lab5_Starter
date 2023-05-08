@@ -2,8 +2,6 @@
 
 window.addEventListener('DOMContentLoaded', init);
 
-var confetti = new JSConfetti();
-
 function init() {
   var whichHorn = document.getElementById("horn-select");
 
@@ -40,7 +38,5 @@ function changeImage(){
 // action after user press the button 
 function pressButton(){
   document.querySelector(".hidden").volume = document.getElementById("volume").value / 100;
-  if(document.getElementById("horn-select").value == "party-horn")
-    confetti.addConfetti();
   document.querySelector(".hidden").play();
 }

@@ -15,7 +15,7 @@ function init() {
 
   button.addEventListener('click', pressButton);
 }
-// function to change the volumn icon
+
 function volumeChanger(){
   if (this.value == 0) {
     document.querySelector("#volume-controls > img").src= "assets/icons/volume-level-0.svg";
@@ -28,14 +28,12 @@ function volumeChanger(){
   }
 }
 
-// change image icon based on the selection
 function changeImage(){
   var image = this.value;  
   document.querySelector("img").src = "assets/images/" + image + ".svg";
   document.querySelector(".hidden").src = "assets/audio/" + image +".mp3";
 }
 
-// action after user press the button 
 function pressButton(){
   document.querySelector(".hidden").volume = document.getElementById("volume").value / 100;
   document.querySelector(".hidden").play();

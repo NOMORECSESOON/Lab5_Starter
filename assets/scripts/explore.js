@@ -3,47 +3,51 @@
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
-  // TODO
-  //define values
-  const synthesis = window.speechSynthesis;
-  const voicechoice = document.querySelector("#voice-select");
+
+  const speech_synthesis = window.speechSynthesis;
+  const voice_choosen = document.querySelector("#voice-select");
   const button = document.querySelector("button");
   const text = document.querySelector("textarea");
   const image = document.querySelector("img");
 
-  let voices = [];
+  let sound = [];
 
-  synthesis.onvoiceschanged = () => {
-    voices = synthesis.getVoices();
+  speech_synthesis.onvoiceschanged = () => {
+    sound = speech_synthesis.getVoices();
 
-    for (let i = 0; i < voices.length; i++) {
+    for (let i = 0; i < sound.length; i++) {
       const option = document.createElement('option');
-      option.textContent = `${voices[i].name} (${voices[i].lang})`;
+      option.textContent = `${sound[i].name} (${sound[i].lang})`;
   
-      if (voices[i].default) {
+      if (sound[i].default) {
         option.textContent += ' — DEFAULT';
       }
   
-      option.setAttribute('data-lang', voices[i].lang);
-      option.setAttribute('data-name', voices[i].name);
-      voicechoice.appendChild(option);
+      option.setAttribute('data-lang', sound[i].lang);
+      option.setAttribute('data-name', sound[i].name);
+      voice_choosen.appendChild(option);
     }
   };
 
-  button.addEventListener('click', () => {
-    const utterThis = new SpeechSynthesisUtterance(text.value);
-    const selectedOption = voicechoice.selectedOptions[0].getAttribute('data-name');
-    for (let i = 0; i < voices.length ; i++) {
-      if (voices[i].name === selectedOption) {
-        utterThis.voice = voices[i];
+  button.addEventListener('click', when_click);
+
+  function when_click(){
+    const text_val = new SpeechSynthesisUtterance(text.value);
+    const selectedOption = voice_choosen.selectedOptions[0].getAttribute('data-name');
+    for (let i = 0; i < sound.length ; i++) {
+      if (sound[i].name === selectedOption) {
+        text_val.voice = sound[i];
       }
     }
-    synthesis.speak(utterThis);
+    speech_synthesis.speak(text_val);
 
     image.setAttribute('src', 'assets/images/smiling-open.png');
     
-    utterThis.addEventListener('end', () => {
-      image.setAttribute('src', 'assets/images/smiling.png');
-    });
-  });
+    text_val.addEventListener('end', toend)
+  }
+
+  function toend(){
+    image.setAttribute('src', 'assets/images/smiling.png');
+  }
+
 }
